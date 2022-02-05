@@ -9,6 +9,7 @@ import (
 
 func isOpen(url string, portNumber int) bool {
 	dialer := net.Dialer{Timeout: 1 * time.Second}
+	//fmt.Println("checking port", portNumber)
 	conn, err := dialer.Dial("tcp", fmt.Sprintf("%s:%d", url, portNumber))
 	if err != nil {
 		return false
