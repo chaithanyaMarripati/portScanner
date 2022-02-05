@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"portScanner/socket"
+	"time"
 )
 
 //1) get the url and last port number from the user
@@ -16,17 +17,8 @@ func main() {
 	fmt.Println("Enter the last portNumber(maximum 1024) to be searched for")
 	fmt.Scanln(&lastPort)
 	lastPort = int(math.Min(float64(lastPort), 1024))
-	openPorts := make([]int, 0, 10)
-	for i := 1; i <= lastPort; i++ {
-		unixSocket := socket.UnixSocket{
-			Url:        url,
-			PortNumber: i,
-		}
-		fmt.Println("checking for port", i)
-		if unixSocket.IsOpen() {
-			openPorts = append(openPorts, unixSocket.PortNumber)
-		}
-	}
-	fmt.Println("open ports for the remote")
-	fmt.Println(openPorts)
+	startTime := time.Now()
+	socket.CheckSockets(lastPort, url)
+	endTime := time.Now()
+	fmt.Println("time taken", endTime.Sub(startTime))
 }
