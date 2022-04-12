@@ -25,8 +25,9 @@ func checkPorts(url string, ports []int, wg *sync.WaitGroup) {
 		}
 	}
 }
-func CheckSockets(lastPort int, url string) {
+func CheckSockets(url string) {
 	var perThread = 3
+	var lastPort = 65535
 	var goThreads = lastPort / perThread
 	var wg sync.WaitGroup
 	for thread := 0; thread < goThreads; thread++ {
